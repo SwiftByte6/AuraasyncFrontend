@@ -146,11 +146,51 @@ export default function Onboarding() {
     const currentIndex = STEP_ORDER.indexOf(currentStep);
     const progress = ((currentIndex + 1) / STEP_ORDER.length) * 100;
     return (
-      <div className="w-[50vw] absolute top-10 left-1/2 transform -translate-x-1/2 bg-white/20 rounded-full h-3 mb-8">
-        <div
-          className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500"
-          style={{ width: `${progress}%` }}
-        ></div>
+      <div>
+        <div className="hidden md:block w-[50vw] absolute top-10 left-1/2 transform -translate-x-1/2 bg-white/20 rounded-full h-3 mb-8">
+          <div
+            className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full transition-all duration-500"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+  };
+
+  const MobileStepper = ({ currentStep }: { currentStep: StepType }) => {
+    const stepsForMobile: StepType[] = [
+      STEPS.SKIN_FACE_ANALYSIS,
+      STEPS.BODY_ANALYSIS,
+      STEPS.PERSONALITY_ANALYSIS,
+    ];
+    const labels = ['Face structure', 'Body Type', 'Personality'];
+    const activeIndex = Math.max(0, stepsForMobile.indexOf(currentStep));
+
+    return (
+      <div className="md:hidden w-full max-w-sm mx-auto pt-6 pb-4">
+        <div className="flex items-center justify-between">
+          {stepsForMobile.map((_, index) => (
+            <div key={index} className="flex-1 flex items-center">
+              <div className="flex flex-col items-center justify-center">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border ${
+                    index <= activeIndex
+                      ? 'bg-white text-gray-900 border-white'
+                      : 'bg-transparent text-white border-white/40'
+                  }`}
+                >
+                  {index + 1}
+                </div>
+                <span className="mt-1 text-[10px] text-white/80 whitespace-nowrap">
+                  {labels[index]}
+                </span>
+              </div>
+              {index < stepsForMobile.length - 1 && (
+                <div className={`h-[2px] flex-1 mx-2 ${index < activeIndex ? 'bg-white' : 'bg-white/30'}`}></div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
@@ -293,7 +333,7 @@ export default function Onboarding() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleNext = () => {
-      if (analysisData.face_shape) {
+      if (analysisData.skin_tone) {
         const updatedData = { ...userData, ...analysisData };
         updateUserData(updatedData);
         setUserDataState(updatedData);
@@ -598,6 +638,127 @@ export default function Onboarding() {
     //   </div>
     // );
 
+    const SkinToneManualInput = () => {
+      const [currentQuestion, setCurrentQuestion] = useState(0);
+      const [answers, setAnswers] = useState<string[]>([]);
+      
+      const questions = [
+        {
+          question: "What color are the veins on your wrist?",
+          options: ["Bluish or Purple", "Greenish", "Hard to tell / Mix of both"]
+        },
+        {
+          question: "How does your skin react to sunlight?",
+          options: ["Tans easily, rarely burns", "Burns or turns pink easily", "Sometimes tans, sometimes burns"]
+        },
+        {
+          question: "What undertone does your bare skin have in natural light?",
+          options: ["Yellow, peachy, or golden", "Pink, red, or bluish", "Olive or hard to tell"]
+        }
+      ];
+
+      const handleAnswer = (answer: string) => {
+        const newAnswers = [...answers, answer];
+        setAnswers(newAnswers);
+        
+        if (currentQuestion < questions.length - 1) {
+          setCurrentQuestion(currentQuestion + 1);
+        } else {
+          // Determine skin tone based on answers
+          let skinTone = 'Warm';
+          if (newAnswers[0] === 'Bluish or Purple' && newAnswers[1] === 'Burns or turns pink easily' && newAnswers[2] === 'Pink, red, or bluish') {
+            skinTone = 'Cool';
+          } else if (newAnswers[0] === 'Hard to tell / Mix of both' || newAnswers[1] === 'Sometimes tans, sometimes burns' || newAnswers[2] === 'Olive or hard to tell') {
+            skinTone = 'Neutral';
+          }
+          
+          setAnalysisData(prev => ({ ...prev, skin_tone: skinTone }));
+          setCurrentAnalysis(null);
+          setShowManualInput(false);
+        }
+      };
+
+      const resetQuestionnaire = () => {
+        setCurrentQuestion(0);
+        setAnswers([]);
+      };
+
+      return (
+        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
+          <h3 className="text-xl font-semibold mb-4">Skin Tone Analysis</h3>
+          
+          {currentQuestion < questions.length ? (
+            <div>
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-gray-300">Question {currentQuestion + 1} of {questions.length}</span>
+                  <div className="flex space-x-1">
+                    {questions.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-2 h-2 rounded-full ${
+                          index <= currentQuestion ? 'bg-white' : 'bg-white/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <div className="w-full bg-white/20 rounded-full h-2">
+                  <div
+                    className="bg-gradient-to-r from-green-500 to-emerald-600 h-2 rounded-full transition-all duration-500"
+                    style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              <h4 className="text-lg font-medium mb-6">{questions[currentQuestion].question}</h4>
+              
+              <div className="space-y-3">
+                {questions[currentQuestion].options.map((option, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswer(option)}
+                    className="w-full p-4 rounded-lg border-2 border-white/30 bg-white/10 hover:border-white/50 transition-colors text-left"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+
+              {currentQuestion > 0 && (
+                <button
+                  onClick={() => {
+                    setCurrentQuestion(currentQuestion - 1);
+                    setAnswers(answers.slice(0, -1));
+                  }}
+                  className="mt-4 w-full text-gray-300 underline text-sm"
+                >
+                  ← Back to previous question
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="text-center">
+              <div className="text-4xl mb-4">✨</div>
+              <h4 className="text-lg font-medium mb-2">Analysis Complete!</h4>
+              <p className="text-gray-300 mb-4">Your skin tone has been determined based on your answers.</p>
+              <div className="bg-green-500/20 rounded-lg p-4 mb-4">
+                <p className="text-green-300 font-medium">
+                  Skin Tone: {analysisData.skin_tone}
+                </p>
+              </div>
+              <button
+                onClick={resetQuestionnaire}
+                className="text-gray-300 underline text-sm"
+              >
+                Retake questionnaire
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    };
+
     const FaceShapeManualInput = () => (
       <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
         <h3 className="text-xl font-semibold mb-4">Select Your Face Shape</h3>
@@ -704,11 +865,12 @@ export default function Onboarding() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="min-h-screen bg-[#251F1E] flex items-center justify-center  text-white p-8"
+        className="min-h-screen bg-[#251F1E] flex items-center justify-center  text-white p-4 md:p-8"
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center">
-          <div className=''>
+          <div className='w-full'>
             <ProgressBar currentStep={STEPS.SKIN_FACE_ANALYSIS} />
+            <MobileStepper currentStep={STEPS.SKIN_FACE_ANALYSIS} />
           </div>
 
           {/* Show upload analysis if active */}
@@ -726,13 +888,16 @@ export default function Onboarding() {
           )}
 
           {/* Show manual input if active */}
+          {showManualInput && currentAnalysis === 'skin_tone' && (
+            <SkinToneManualInput />
+          )}
           {showManualInput && currentAnalysis === 'face_shape' && (
             <FaceShapeManualInput />
           )}
 
           {/* Show analysis options if no analysis is active */}
           {!currentAnalysis && !showManualInput && (
-            <div className="w-[100vw] h-[80vh]  gap-8">
+            <div className="w-full md:w-[100vw] md:h-[80vh] gap-8">
               {/* Face Analysis */}
               <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
 
@@ -743,7 +908,7 @@ export default function Onboarding() {
             </p> */}
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   {/* Image Section */}
-                  <div className="md:w-3/4 w-full h-[30vh] md:h-[80vh]  relative rounded-lg overflow-hidden">
+                  <div className="md:w-3/4 w-full h-[32vh] md:h-[80vh]  relative rounded-lg overflow-hidden">
                     <Image
                       src={FacePhoto}
                       alt="Face Photo"
@@ -754,6 +919,25 @@ export default function Onboarding() {
 
                   {/* Action Buttons */}
                   <div className="md:w-1/4 w-full flex flex-col space-y-4">
+                    {/* Analysis Status */}
+                    <div className="w-full h-auto bg-[#444141] p-4 rounded-3xl backdrop-blur-lg text-white">
+                      <h3 className="text-lg font-bold mb-3">Analysis Status</h3>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">Skin Tone:</span>
+                          <span className={`text-sm px-2 py-1 rounded ${analysisData.skin_tone ? 'bg-green-500/20 text-green-300' : 'bg-gray-500/20 text-gray-300'}`}>
+                            {analysisData.skin_tone || 'Pending'}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm">Face Shape:</span>
+                          <span className={`text-sm px-2 py-1 rounded ${analysisData.face_shape ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`}>
+                            {analysisData.face_shape || 'Optional'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="w-full h-auto bg-[#444141] p-6 rounded-3xl backdrop-blur-lg text-white">
                       <h1 className="text-xl font-bold mb-4">📸 Face & Skin Analysis Instructions</h1>
                       <p className="text-sm mb-3">
@@ -776,20 +960,31 @@ export default function Onboarding() {
                         onClick={() => startAnalysis('face_shape', 'upload')}
                         className=" border-2 border-white px-16 text-white py-3 rounded-full font-semibold hover:border-white hover:from-green-600 hover:to-emerald-700 transition-all"
                       >
-                        Upload Photo +
+                        Upload +
                       </button>
                     </div>
                     <button
                       onClick={() => startAnalysis('face_shape', 'camera')}
                       className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all"
                     >
-                      Camera from Web
+                      Capture from Web Camera
                     </button>
                     <button
-                      onClick={() => handleManualInput('face_shape')}
+                      onClick={() => handleManualInput('skin_tone')}
                       className="w-full  text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
                     >
-                      <span className='underline'> Manual Selection</span>
+                      <span className='underline'> Or Insert Manually</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        // Skip face analysis, only do skin tone
+                        if (!analysisData.skin_tone) {
+                          setAnalysisData(prev => ({ ...prev, skin_tone: 'Warm' })); // Default skin tone
+                        }
+                      }}
+                      className="w-full text-gray-400 py-2 text-sm underline hover:text-white transition-colors"
+                    >
+                      Skip Face Analysis
                     </button>
                     <div className="flex justify-center gap-4 mt-8">
                       <button
@@ -800,10 +995,10 @@ export default function Onboarding() {
                       </button>
                       <button
                         onClick={handleNext}
-                        disabled={!analysisData.face_shape}
+                        disabled={!analysisData.skin_tone}
                         className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-600 hover:to-purple-700 transition-all"
                       >
-                        Next: Body Analysis
+                        Next
                       </button>
                     </div>
                   </div>
@@ -1258,10 +1453,11 @@ export default function Onboarding() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="min-h-screen bg-[#251F1E] text-white p-8"
+        className="min-h-screen bg-[#251F1E] text-white p-4 md:p-8"
       >
         <div className=" mx-auto">
           <ProgressBar currentStep={STEPS.BODY_ANALYSIS} />
+          <MobileStepper currentStep={STEPS.BODY_ANALYSIS} />
           <h2 className="text-3xl font-bold mb-8 text-center">Body Shape Analysis</h2>
           <p className="text-center text-gray-300 mb-8">Let&apos;s analyze your body shape</p>
 
@@ -1319,7 +1515,7 @@ export default function Onboarding() {
                 onClick={() => startAnalysis('body_shape', 'camera')}
                 className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all"
               >
-                📷 Camera from Web
+                📷 Capture from Web Camera
               </button>
 
               {/* Manual Selection */}
@@ -1342,7 +1538,7 @@ export default function Onboarding() {
                   onClick={handleNext}
                   className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 transition-all"
                 >
-                  Next: Personality Analysis
+                  Next
                 </button>
               </div>
             </div>
@@ -1364,6 +1560,8 @@ export default function Onboarding() {
 
   // Step 5: Personality Analysis Component (16 Questions)
   const PersonalityAnalysisStep = ({ userData, setUserDataState, setCurrentStep, STEPS }: any) => {
+    const [hasStarted, setHasStarted] = useState(false);
+
     const handleNext = (personalityType: string) => {
       const updatedData = { ...userData, personality: personalityType };
       updateUserData(updatedData);
@@ -1376,14 +1574,74 @@ export default function Onboarding() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-black text-white p-8"
+        className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-black text-white p-4 md:p-8"
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <ProgressBar currentStep={STEPS.PERSONALITY_ANALYSIS} />
+          <MobileStepper currentStep={STEPS.PERSONALITY_ANALYSIS} />
           <h2 className="text-3xl font-bold mb-8 text-center">Personality Analysis</h2>
-          <p className="text-center text-gray-300 mb-8">Discover your style personality with our 16-question assessment</p>
 
-          <PersonalityAnalysisWidget onComplete={handleNext} />
+          {!hasStarted ? (
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              {/* Image + badge */}
+              <div className="md:w-3/4 w-full relative rounded-lg overflow-hidden border border-white/10">
+                <div className="relative w-full h-[40vh] md:h-[60vh]">
+                  <Image src={FacePhoto} alt="Personality" fill className="object-cover" />
+                </div>
+                <div className="absolute top-4 left-4 bg-white text-gray-900 text-xs md:text-sm font-semibold rounded-full px-3 py-1 shadow">
+                  FACE & SKIN TONE ANALYSIS
+                </div>
+                <div className="absolute bottom-6 left-6 bg-black/50 backdrop-blur px-4 py-3 rounded-lg border border-white/10">
+                  <div className="text-sm md:text-base text-gray-200">
+                    <span className="font-semibold">Personality:</span> ENFP
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-300">- Outgoing, Energetic</div>
+                </div>
+                <div className="absolute bottom-6 right-6 text-white text-xl md:text-2xl font-semibold">
+                  Get you face type and skin
+                  <br />
+                  tone analyzed
+                </div>
+              </div>
+
+              {/* Instructions + CTA */}
+              <div className="md:w-1/4 w-full">
+                <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
+                  <h3 className="text-xl font-bold mb-4">Instructions:</h3>
+                  <p className="text-sm text-gray-300 mb-3">
+                    Welcome to the Personality Analysis Test! ✨
+                  </p>
+                  <p className="text-sm text-gray-300 mb-3">
+                    This test helps us understand your personality type (MBTI) to tailor fashion suggestions.
+                  </p>
+                  <ul className="list-disc list-inside text-sm text-gray-300 space-y-1 mb-6">
+                    <li>There are 16–20 questions in total.</li>
+                    <li>Answer honestly — no right or wrong answers.</li>
+                    <li>Go with your first instinct.</li>
+                    <li>Be consistent with how you usually feel or act.</li>
+                    <li>The test usually takes 5–7 minutes.</li>
+                  </ul>
+                  <button
+                    onClick={() => setHasStarted(true)}
+                    className="w-full rounded-full bg-white text-gray-900 font-semibold py-3 hover:bg-gray-100 transition"
+                  >
+                    Start the test
+                  </button>
+                  <button
+                    onClick={() => setCurrentStep(STEPS.COMPLETE)}
+                    className="mt-4 w-full text-gray-300 underline text-sm"
+                  >
+                    i’ll do it later
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <p className="text-center text-gray-300 mb-8">Discover your style personality with our 16-question assessment</p>
+              <PersonalityAnalysisWidget onComplete={handleNext} />
+            </>
+          )}
         </div>
       </motion.div>
     );

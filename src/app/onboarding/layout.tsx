@@ -92,14 +92,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} ${playfair.variable}`}>
       <body className="bg-black text-white flex flex-col min-h-screen">
-         
-           <div className="relative w-full min-h-screen z-[9999]">
-  {children}
-</div>
-
-
-         
-
+        <div className="relative w-full min-h-screen z-[9999]">
+          {children}
+        </div>
       </body>
     </html>
   );
