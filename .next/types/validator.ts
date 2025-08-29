@@ -148,3 +148,9 @@ type ApiRouteConfig = {
   const handler = {} as typeof import("../../src/app/layout.js")
   handler satisfies LayoutConfig<"/">
 }
+
+// Validate ../../src/app/onboarding/layout.tsx
+{
+  const handler = {} as typeof import("../../src/app/onboarding/layout.js")
+  handler satisfies LayoutConfig<"/onboarding">
+}

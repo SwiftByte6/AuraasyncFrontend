@@ -30,7 +30,7 @@ export default function BottomNav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
-    <nav className={` ${scrolled?"hidden":"fixed"}   bottom-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white flex items-center justify-around gap-4 px-6 py-3 rounded-2xl shadow-lg w-[70%] max-w-md`}>
+    <nav className={` fixed z-1000  bottom-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white flex items-center justify-around gap-4 px-6 py-6 rounded-2xl shadow-lg w-[70%] max-w-md`}>
       {/* Home */}
       <button className="flex flex-col items-center">
         <Home className="h-8 w-8" />
