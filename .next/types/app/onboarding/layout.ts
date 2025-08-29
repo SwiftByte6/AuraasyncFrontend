@@ -1,4 +1,4 @@
-// File: C:\Users\AuraSync\Downloads\AURASYNN-FRONTED\AuraasyncFrontend\src\app\onboarding\layout.tsx
+// File: C:\Users\Lenovo\Desktop\main\final\frontend\src\app\onboarding\layout.tsx
 import * as entry from '../../../../src/app/onboarding/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

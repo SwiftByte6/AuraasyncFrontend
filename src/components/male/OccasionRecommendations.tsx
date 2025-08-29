@@ -11,12 +11,12 @@ import vacay from "@/app/assets/Occasion/Vevay mood.png";
 
 const OccasionRecommendations = () => {
   const menuItems = [
-    { link: "/explore", text: "GLOW UP VIBES", image: glowUp },
-    { link: "/explore", text: "Campus or Work Fit", image: campusFit },
-    { link: "/explore", text: "Date & Chill", image: dateChill },
-    { link: "/explore", text: "Shaadi Scenes", image: shaadi },
-    { link: "/explore", text: "Festive Feels", image: festive },
-    { link: "/explore", text: "Vacay Mood", image: vacay },
+    { link: "/male/occasion/glow-up-vibes", text: "GLOW UP VIBES", image: glowUp, slug: "glow-up-vibes" },
+    { link: "/male/occasion/campus-work-fit", text: "Campus or Work Fit", image: campusFit, slug: "campus-work-fit" },
+    { link: "/male/occasion/date-chill", text: "Date & Chill", image: dateChill, slug: "date-chill" },
+    { link: "/male/occasion/shaadi-scenes", text: "Shaadi Scenes", image: shaadi, slug: "shaadi-scenes" },
+    { link: "/male/occasion/festive-feels", text: "Festive Feels", image: festive, slug: "festive-feels" },
+    { link: "/male/occasion/vacay-mood", text: "Vacay Mood", image: vacay, slug: "vacay-mood" },
   ];
 
   return (

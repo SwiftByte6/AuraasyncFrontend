@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import HairstyleRecommender from '@/components/male/HairStyleRecommendation';
 import { getUserData } from '@/lib/userState';
+import BottomNavigation from '@/components/male/BottomNavigation';
 
 export default function HairstylePage() {
   const router = useRouter();
@@ -48,8 +49,9 @@ export default function HairstylePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 pb-20">
       <HairstyleRecommender />
+      <BottomNavigation />
     </div>
   );
 }

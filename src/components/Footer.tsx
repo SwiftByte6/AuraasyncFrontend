@@ -9,18 +9,6 @@ const Footer = () => {
 
   return (
     <footer className="w-full bg-[#1a1a1a]  bottom-0 overflow-y-hidden">
-      {/* Subtle grid pattern background */}
-      {/* <div className="absolute inset-0 opacity-10">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-            backgroundSize: "20px 20px",
-          }}
-        ></div>
-      </div> */}
-
       {/* Main footer content - dark grey rounded rectangle */}
       <div className="  w-full bg-[#333333] rounded-t-[40px] pt-10  sm:pt-12 sm:pb-8">
         {/* Content container with max-width and centered */}

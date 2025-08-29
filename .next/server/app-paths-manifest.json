@@ -1,8 +1,7 @@
 {
+  "/dashboard/page": "app/dashboard/page.js",
   "/page": "app/page.js",
-  "/male/page": "app/male/page.js",
+  "/onboarding/page": "app/onboarding/page.js",
   "/female/page": "app/female/page.js",
-  "/hairstyle/page": "app/hairstyle/page.js",
-  "/male/recommendations/page": "app/male/recommendations/page.js",
-  "/onboarding/page": "app/onboarding/page.js"
+  "/female/occasion/[slug]/page": "app/female/occasion/[slug]/page.js"
 }

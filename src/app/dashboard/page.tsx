@@ -3,6 +3,7 @@
 import React from 'react';
 import { getUserData } from '../../lib/userState';
 import { useRouter } from 'next/navigation';
+import BottomNavigation from '@/components/male/BottomNavigation';
 
 export default function Dashboard() {
   const userData = getUserData();
@@ -24,7 +25,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-black text-white p-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-black text-white p-8 pb-20">
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">User Dashboard</h1>
@@ -179,6 +180,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   );
 }

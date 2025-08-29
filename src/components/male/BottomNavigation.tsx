@@ -3,59 +3,76 @@
 import { Home, Search, User, UserCircle } from "lucide-react";
 import Image from "next/image";
 import HairIcon from '@/app/assets/iconHair.png'
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function BottomNav() {
+  const pathname = usePathname();
 
- const [scrolled, setScrolled] = useState(false);
+  const isActive = (path: string) => {
+    if (path === '/male' && pathname === '/male') return true;
+    if (path !== '/male' && pathname.startsWith(path)) return true;
+    return false;
+  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      console.log(currentY);
-
-      // 👉 change 200 to whatever height you want
-      if (currentY > 200) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // run once on mount
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   return (
-    <nav className={` fixed z-1000  bottom-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white flex items-center justify-around gap-4 px-6 py-6 rounded-2xl shadow-lg w-[70%] max-w-md`}>
-      {/* Home */}
-      <button className="flex flex-col items-center">
-        <Home className="h-8 w-8" />
-      </button>
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-neutral-800 text-white border-t border-gray-600">
+      <div className="flex items-center justify-around px-4 py-3">
+        {/* Home */}
+        <Link 
+          href="/male" 
+          className={`flex flex-col items-center space-y-1 transition-colors ${
+            isActive('/male') ? 'text-blue-400' : 'text-white hover:text-blue-400'
+          }`}
+        >
+          <Home className="h-6 w-6" />
+          <span className="text-xs">Home</span>
+        </Link>
 
-      <div className="h-6 w-px bg-gray-600" />
+        {/* Dashboard */}
+        <Link 
+          href="/dashboard" 
+          className={`flex flex-col items-center space-y-1 transition-colors ${
+            isActive('/dashboard') ? 'text-blue-400' : 'text-white hover:text-blue-400'
+          }`}
+        >
+          <UserCircle className="h-6 w-6" />
+          <span className="text-xs">Dashboard</span>
+        </Link>
 
-      {/* Search */}
-      <button className="flex flex-col items-center">
-        <Search className="h-8 w-8" />
-      </button>
+        {/* Search */}
+        <Link 
+          href="/search" 
+          className={`flex flex-col items-center space-y-1 transition-colors ${
+            isActive('/search') ? 'text-blue-400' : 'text-white hover:text-blue-400'
+          }`}
+        >
+          <Search className="h-6 w-6" />
+          <span className="text-xs">Search</span>
+        </Link>
 
-      <div className="h-6 w-px bg-gray-600" />
+        {/* Hairstyle */}
+        <Link 
+          href="/hairstyle" 
+          className={`flex flex-col items-center space-y-1 transition-colors ${
+            isActive('/hairstyle') ? 'text-blue-400' : 'text-white hover:text-blue-400'
+          }`}
+        >
+          <Image src={HairIcon} width={24} height={24} alt="hair icon" className="h-6 w-6"/>
+          <span className="text-xs">Hairstyle</span>
+        </Link>
 
-      {/* UserCircle */}
-      <button className="flex flex-col items-center">
-        <Image src={HairIcon} width={30} height={20} alt="hair icon"/>
-      </button>
-
-      <div className="h-6 w-px bg-gray-600" />
-
-      {/* Profile */}
-      <button className="flex flex-col items-center">
-        <User className="h-8 w-8" />
-      </button>
+        {/* Profile */}
+        <Link 
+          href="/profile" 
+          className={`flex flex-col items-center space-y-1 transition-colors ${
+            isActive('/profile') ? 'text-blue-400' : 'text-white hover:text-blue-400'
+          }`}
+        >
+          <User className="h-6 w-6" />
+          <span className="text-xs">Profile</span>
+        </Link>
+      </div>
     </nav>
   );
 }

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import GenderNavbar from '../../../components/GenderNavbar';
+import BottomNavigation from '@/components/male/BottomNavigation';
 
 type Product = {
   title: string;
@@ -57,7 +58,7 @@ export default function MaleRecommendationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-black text-white">
       <GenderNavbar gender="male" />
-      <div className="pt-20 px-6 max-w-7xl mx-auto">
+      <div className="pt-20 pb-20 px-6 max-w-7xl mx-auto">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl md:text-4xl font-bold">Male Recommendations</h1>
           <button
@@ -106,6 +107,7 @@ export default function MaleRecommendationsPage() {
           <div className="py-16 text-center text-gray-200">No recommendations found. Try refreshing.</div>
         )}
       </div>
+      <BottomNavigation />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import OutfitRecommendations from '@/components/male/OutfitRecommendations';
 import OccasionRecommendations from '@/components/male/OccasionRecommendations';
 import MarqueeText from '@/components/male/MarqueeText';
 import ProductGrid from '@/components/male/ProductGrid';
+import BottomNavigation from '@/components/male/BottomNavigation';
 
 // Analysis steps
 const ANALYSIS_STEPS = [
@@ -361,9 +362,10 @@ export default function MaleLanding() {
   return (
     <div className="min-h-screen bg-black">
       <GenderNavbar gender="male" />
-      <div className="pt-16">
+      <div className="pt-16 pb-20">
         <MaleHome />
       </div>
+      <BottomNavigation />
     </div>
   );
 }

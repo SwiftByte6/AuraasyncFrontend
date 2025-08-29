@@ -12,11 +12,20 @@ const OccasionRecommendations = () => {
     "Vacay Mood"
   ];
 
-  const menuItems = occasions.map(occasion => ({
-    link: "/explore",
-    text: occasion,
-    image: undefined // You can add images later if needed
-  }));
+  const menuItems = occasions.map(occasion => {
+    // Convert occasion text to slug
+    const slug = occasion.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9-]/g, '');
+    
+    return {
+      link: `/female/occasion/${slug}`,
+      text: occasion,
+      image: undefined, // You can add images later if needed
+      slug: slug
+    };
+  });
 
   return (
     <section className="py-1 bg-[#1a1414] relative min-h-screen">

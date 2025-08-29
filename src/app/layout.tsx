@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import Footer from '../components/Footer';
+import ConditionalFooter from '../components/ConditionalFooter';
 import FlowController from '../components/FlowController';
 
 const montserrat = Montserrat({
@@ -97,7 +97,7 @@ export default function RootLayout({
           <div className="flex-grow">
             {children}
           </div>
-          <Footer />
+          <ConditionalFooter />
         </FlowController>
       </body>
     </html>
