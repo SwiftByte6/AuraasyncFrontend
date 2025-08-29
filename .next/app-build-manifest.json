@@ -11,6 +11,17 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/male/recommendations/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/male/recommendations/page.js"
+    ],
+    "/male/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/male/page.css",
+      "static/chunks/app/male/page.js"
+    ],
     "/onboarding/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -21,6 +32,17 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/onboarding/page.js"
+    ],
+    "/female/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/female/page.css",
+      "static/chunks/app/female/page.js"
+    ],
+    "/hairstyle/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/hairstyle/page.js"
     ]
   }
 }

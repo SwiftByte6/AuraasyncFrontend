@@ -91,6 +91,12 @@ type ApiRouteConfig = {
   handler satisfies AppPageConfig<"/female/recommendations">
 }
 
+// Validate ../../src/app/hairstyle/page.tsx
+{
+  const handler = {} as typeof import("../../src/app/hairstyle/page.js")
+  handler satisfies AppPageConfig<"/hairstyle">
+}
+
 // Validate ../../src/app/male/page.tsx
 {
   const handler = {} as typeof import("../../src/app/male/page.js")

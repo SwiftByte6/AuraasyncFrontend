@@ -1,4 +1,8 @@
 {
   "/page": "app/page.js",
+  "/male/page": "app/male/page.js",
+  "/female/page": "app/female/page.js",
+  "/hairstyle/page": "app/hairstyle/page.js",
+  "/male/recommendations/page": "app/male/recommendations/page.js",
   "/onboarding/page": "app/onboarding/page.js"
 }
