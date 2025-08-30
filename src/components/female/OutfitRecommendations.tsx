@@ -1,44 +1,58 @@
 import mensWear from '@/app/assets/mens-wear.jpg';
 import womensWear from '@/app/assets/womens-wear.jpg';
 import streetwear from '@/app/assets/streetwear.jpg';
+import r1 from '@/app/assets/femaleCat/r1.png';
+import r2 from '@/app/assets/femaleCat/r2.png';
+import r3 from '@/app/assets/femaleCat/r3.png';
+import r4 from '@/app/assets/femaleCat/r4.png';
+import middle from '@/app/assets/femaleCat/middle.png';
+import large from '@/app/assets/femaleCat/large.png'
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const OutfitRecommendations = () => {
+  const router = useRouter();
+  
   const recommendations = [
     {
       id: 1,
-      image: mensWear,
-      label: "Men's Shirts",
-      caption: "Discover our latest Men Shirts collection",
-      featured: false
+      image: r1,
+      label: "Women's dress",
+      caption: "Discover our latest Women's Dresses collection",
+      featured: false,
+      slug: 'womens-dresses'
     },
     {
       id: 2,
-      image: womensWear,
-      label: "Men's Ethnic wear",
-      caption: "Discover our latest Men's ethnic wear collection",
-      featured: true
+      image: middle,
+      label: "Women's Shirts",
+      caption: "Discover our latest Women's Shirts collection",
+      featured: true,
+      slug: 'womens-shirts'
     },
     {
       id: 3,
-      image: streetwear,
-      label: "Men's Bottomwears",
-      caption: "Discover our latest women jacket collection",
-      featured: false
+      image: r2,
+      label: "Women's Bottomwears",
+      caption: "Discover our latest Women's Bottomwear collection",
+      featured: false,
+      slug: 'womens-bottomwear'
     },
     {
       id: 4,
-      image: mensWear,
-      label: "Men's T-shirts",
-      caption: "Discover our latest Men's T-shirt collection",
-      featured: false
+      image: r3,
+      label: "Women's T-shirt",
+      caption: "Discover our latest Women's T-shirt collection",
+      featured: false,
+      slug: 'womens-tshirts'
     },
     {
       id: 5,
-      image: womensWear,
-      label: "Men's Jackets",
-      caption: "Discover our latest women jacket collection",
-      featured: false
+      image: r4,
+      label: "Women's Coats",
+      caption: "Discover our latest Women's Coats collection",
+      featured: false,
+      slug: 'womens-coats'
     }
   ];
 
@@ -57,7 +71,7 @@ const OutfitRecommendations = () => {
       
       {/* Content Section - Responsive Grid Layout */}
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+        <div className=" mx-auto">
           <div className=" hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Column 1: Two standard cards stacked */}
             <div className="flex flex-col gap-6">
@@ -66,7 +80,7 @@ const OutfitRecommendations = () => {
             </div>
             
             {/* Column 2: One tall featured card */}
-            <div className="flex h-full w-full">
+            <div className="flex w-full h-full w-full">
               <RecommendationCard {...recommendations[1]} />
             </div>
             
@@ -96,9 +110,12 @@ const OutfitRecommendations = () => {
           
           {/* Extra Ethnic Wear Block - Full Width */}
           <div className="mt-6">
-            <div className="relative group overflow-hidden border border-white/10 bg-black/10 shadow-lg cursor-pointer h-[300px] md:h-[400px]">
+            <div 
+              className="relative group overflow-hidden border border-white/10 bg-black/10 shadow-lg cursor-pointer h-[300px] md:h-[400px]"
+              onClick={() => router.push('/female/outfit-recommendation/womens-ethnic-wear')}
+            >
               <Image
-                src={womensWear}
+                src={large}
                 alt="Ethnic wear collection"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 group-hover:brightness-95"
               />
@@ -110,7 +127,7 @@ const OutfitRecommendations = () => {
               <div className="absolute bottom-4 left-4 right-4 z-10">
                 {/* Category pill */}
                 <div className="inline-block rounded-full bg-white text-gray-900 text-xs font-semibold px-3 py-1 shadow">
-                  Ethnic wear
+                  Women's Ethnic wear
                 </div>
                 
                 {/* Headline/description */}
@@ -129,11 +146,22 @@ const OutfitRecommendations = () => {
   );
 };
 
-const RecommendationCard = ({ image, label, caption, featured }) => {
+const RecommendationCard = ({ image, label, caption, featured, slug }) => {
+  const cardRouter = useRouter();
+  
+  const handleClick = () => {
+    if (slug) {
+      cardRouter.push(`/female/outfit-recommendation/${slug}`);
+    }
+  };
+
   return (
-    <div className={`relative group overflow-hidden border border-white/10 bg-black/10 shadow-lg cursor-pointer ${
-      featured ? 'h-[624px] w-[408px]' : 'h-[300px]'
-    }`}>
+    <div 
+      className={`relative group overflow-hidden border border-white/10 bg-black/10 shadow-lg cursor-pointer ${
+        featured ? 'h-[724px] w-full' : 'h-[350px]'
+      }`}
+      onClick={handleClick}
+    >
       <Image
         src={image}
         alt={caption}

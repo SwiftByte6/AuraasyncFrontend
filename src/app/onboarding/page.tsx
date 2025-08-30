@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Webcam from "react-webcam";
@@ -178,107 +178,106 @@ export default function Onboarding() {
               }}
               className="text-gray-400 hover:text-white transition-colors"
             >
-              Skip for testing →
+              Skip for testing â†'
             </button>
           </div>
         </div>
       </motion.div>
     );
   };
-  const ProgressBar = ({ currentStep }: { currentStep: StepType }) => {
-    const currentIndex = STEP_ORDER.indexOf(currentStep);
 
-    return (
-      <>
-        {/* Desktop Progress Bar */}
-        <div className="hidden md:flex absolute items-center justify-center w-[30vw] md:w-[40vw] mt-6 top-5 left-1/2 -translate-x-1/2 mx-auto z-50">
-          {STEP_ORDER.map((step, index) => {
-            const isActive = index === currentIndex;
-            const isCompleted = index < currentIndex;
 
-            return (
-              <div key={step} className="flex flex-col items-center w-full">
-                {/* Step Circle */}
-                <div
-                  className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold
-                    ${
-                      isActive
-                        ? "bg-green-500 text-white"
-                        : isCompleted
-                        ? "bg-green-600 text-white"
-                        : "bg-gray-900 text-white"
-                    }
-                  `}
-                >
-                  {isCompleted ? <Check /> : index + 1}
-                </div>
+const ProgressBar = ({ currentStep }: { currentStep: StepType }) => {
+  const currentIndex = STEP_ORDER.indexOf(currentStep);
 
-                {/* Step Label */}
-                <div className="ml-2 text-sm text-gray-200">
-                  {STEP_LABELS[step]}
-                </div>
+  return (
+    <>
+      {/* Desktop Progress Bar */}
+      <div className="hidden md:flex absolute items-center justify-between w-[40vw] mt-6 top-5 left-1/2 -translate-x-1/2 z-50">
+        {STEP_ORDER.map((step, index) => {
+          const isActive = index === currentIndex;
+          const isCompleted = index < currentIndex;
 
-                {/* Connector Line */}
-                {index !== STEP_ORDER.length - 1 && (
-                  <div className="flex-1 h-[7px] mx-2 bg-gray-700 relative">
-                    <div
-                      className="absolute top-0 left-0 h-[7px] bg-green-500 transition-all duration-500"
-                      style={{ width: isCompleted ? "100%" : "0%" }}
-                    ></div>
-                  </div>
-                )}
+          return (
+            <div key={step} className="flex flex-col items-center flex-1 relative">
+              {/* Step Circle */}
+              <div
+                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold z-10
+                  ${
+                    isActive
+                      ? "bg-green-500 text-white"
+                      : isCompleted
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-900 text-white"
+                  }
+                `}
+              >
+                {isCompleted ? <Check size={16} /> : index + 1}
               </div>
-            );
-          })}
-        </div>
 
-        {/* Mobile Progress Bar */}
-        <div className="md:hidden flex items-center justify-center w-full mt-20 mb-6 px-4 z-50">
-          <div className="flex items-center justify-between w-full max-w-sm">
-            {STEP_ORDER.map((step, index) => {
-              const isActive = index === currentIndex;
-              const isCompleted = index < currentIndex;
+              {/* Step Label */}
+              <div className="mt-2 text-sm text-gray-200">
+                {STEP_LABELS[step]}
+              </div>
 
-              return (
-                <div key={step} className="flex flex-col items-center">
-                  {/* Step Circle */}
+              {/* Connector Line */}
+              {index !== STEP_ORDER.length - 1 && (
+                <div className="absolute top-4 left-1/2 w-full h-[4px] bg-gray-700 -z-10">
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold mb-2
-                      ${
-                        isActive
-                          ? "bg-green-500 text-white"
-                          : isCompleted
-                          ? "bg-green-600 text-white"
-                          : "bg-gray-900 text-white"
-                      }
-                    `}
-                  >
-                    {isCompleted ? <Check /> : index + 1}
-                  </div>
-
-                  {/* Step Label */}
-                  <div className="text-xs text-gray-200 text-center max-w-[80px]">
-                    {STEP_LABELS[step]}
-                  </div>
-
-                  {/* Connector Line */}
-                  {index !== STEP_ORDER.length - 1 && (
-                    <div className="flex-1 h-[3px] mx-2 bg-gray-700 relative">
-                      <div
-                        className="absolute top-0 left-0 h-[3px] bg-green-500 transition-all duration-500"
-                        style={{ width: isCompleted ? "100%" : "0%" }}
-                      ></div>
-                    </div>
-                  )}
+                    className="h-[4px] bg-green-500 transition-all duration-500"
+                    style={{ width: isCompleted ? "100%" : "0%" }}
+                  />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </>
-    );
-  };
+              )}
+            </div>
+          );
+        })}
+      </div>
 
+      {/* Mobile Progress Bar - Fixed positioning */}
+      <div className="md:hidden flex items-center justify-between w-full px-4 z-50 absolute top-4 left-0 right-0">
+        {STEP_ORDER.map((step, index) => {
+          const isActive = index === currentIndex;
+          const isCompleted = index < currentIndex;
+
+          return (
+            <div key={step} className="flex flex-col items-center flex-1 relative">
+              {/* Step Circle */}
+              <div
+                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-semibold mb-2 z-10
+                  ${
+                    isActive
+                      ? "bg-green-500 text-white"
+                      : isCompleted
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-900 text-white"
+                  }
+                `}
+              >
+                {isCompleted ? <Check size={14} /> : index + 1}
+              </div>
+
+              {/* Step Label */}
+              <div className="text-xs text-gray-200 text-center max-w-[80px]">
+                {STEP_LABELS[step]}
+              </div>
+
+              {/* Connector Line */}
+              {index !== STEP_ORDER.length - 1 && (
+                <div className="absolute top-3 left-1/2 w-full h-[3px] bg-gray-700 -z-10">
+                  <div
+                    className="h-[3px] bg-green-500 transition-all duration-500"
+                    style={{ width: isCompleted ? "100%" : "0%" }}
+                  />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
   // Step 2: Basic Info Component
   const BasicInfoStep = ({
     userData,
@@ -326,8 +325,7 @@ export default function Onboarding() {
           </div>
 
           <div className="w-full h-[100vh] absolute top-0 left-0 bg-black/50 pointer-events-none"></div>
-          <ProgressBar currentStep={STEPS.BASIC_INFO} />
-
+          
           {/* Form */}
           <div className="bg-[#353333] absolute backdrop-blur-lg rounded-2xl p-8 w-full max-w-md text-white">
             <h2 className="text-3xl font-bold mb-6 text-center">
@@ -432,7 +430,7 @@ export default function Onboarding() {
           </div>
 
           <div className="w-full h-[100vh] absolute top-0 left-0 bg-black/50 pointer-events-none"></div>
-          <ProgressBar currentStep={STEPS.BASIC_INFO} />
+        
 
           {/* Form */}
           <div className="bg-[#353333] absolute backdrop-blur-lg rounded-2xl p-6 w-full max-w-sm text-white mx-4">
@@ -882,10 +880,11 @@ export default function Onboarding() {
         {
           question: "What color are the veins on your wrist?",
           options: [
-            "Bluish or Purple",
             "Greenish",
+            "Bluish or Purple",
             "Hard to tell / Mix of both",
           ],
+          values: ["WARM", "COLD", "NEUTRAL"],
         },
         {
           question: "How does your skin react to sunlight?",
@@ -894,6 +893,7 @@ export default function Onboarding() {
             "Burns or turns pink easily",
             "Sometimes tans, sometimes burns",
           ],
+          values: ["WARM", "COLD", "NEUTRAL"],
         },
         {
           question: "What undertone does your bare skin have in natural light?",
@@ -902,8 +902,27 @@ export default function Onboarding() {
             "Pink, red, or bluish",
             "Olive or hard to tell",
           ],
+          values: ["WARM", "COLD", "NEUTRAL"],
         },
       ];
+
+      const determineSkinTone = (answers: string[]) => {
+        // Count occurrences of each type
+        const warmCount = answers.filter(answer => answer === "WARM").length;
+        const coldCount = answers.filter(answer => answer === "COLD").length;
+        const neutralCount = answers.filter(answer => answer === "NEUTRAL").length;
+
+        // If 2 or more of the same answers are selected, that's the result
+        if (warmCount >= 2) return "Warm";
+        if (coldCount >= 2) return "Cold";
+        if (neutralCount >= 2) return "Neutral";
+
+        // If all three show different values, result is Neutral
+        if (warmCount === 1 && coldCount === 1 && neutralCount === 1) return "Neutral";
+
+        // Default fallback
+        return "Neutral";
+      };
 
       const handleAnswer = (answer: string) => {
         const newAnswers = [...answers, answer];
@@ -912,22 +931,9 @@ export default function Onboarding() {
         if (currentQuestion < questions.length - 1) {
           setCurrentQuestion(currentQuestion + 1);
         } else {
-          // Determine skin tone based on answers
-          let skinTone = "Warm";
-          if (
-            newAnswers[0] === "Bluish or Purple" &&
-            newAnswers[1] === "Burns or turns pink easily" &&
-            newAnswers[2] === "Pink, red, or bluish"
-          ) {
-            skinTone = "Cool";
-          } else if (
-            newAnswers[0] === "Hard to tell / Mix of both" ||
-            newAnswers[1] === "Sometimes tans, sometimes burns" ||
-            newAnswers[2] === "Olive or hard to tell"
-          ) {
-            skinTone = "Neutral";
-          }
-
+          // Determine skin tone based on the logic you specified
+          const skinTone = determineSkinTone(newAnswers);
+          
           setAnalysisData((prev) => ({ ...prev, skin_tone: skinTone }));
           setCurrentAnalysis(null);
           setShowManualInput(false);
@@ -981,10 +987,21 @@ export default function Onboarding() {
                 {questions[currentQuestion].options.map((option, index) => (
                   <button
                     key={index}
-                    onClick={() => handleAnswer(option)}
+                    onClick={() => handleAnswer(questions[currentQuestion].values[index])}
                     className="w-full p-4 rounded-lg border-2 border-white/30 bg-white/10 hover:border-white/50 transition-colors text-left"
                   >
-                    {option}
+                    <div className="flex justify-between items-center">
+                      <span>{option}</span>
+                      <span className={`text-xs px-2 py-1 rounded ${
+                        questions[currentQuestion].values[index] === "WARM" 
+                          ? "bg-orange-500/20 text-orange-300" 
+                          : questions[currentQuestion].values[index] === "COLD" 
+                          ? "bg-blue-500/20 text-blue-300" 
+                          : "bg-gray-500/20 text-gray-300"
+                      }`}>
+                        {questions[currentQuestion].values[index]}
+                      </span>
+                    </div>
                   </button>
                 ))}
               </div>
@@ -997,20 +1014,42 @@ export default function Onboarding() {
                   }}
                   className="mt-4 w-full text-gray-300 underline text-sm"
                 >
-                  ← Back to previous question
+                  â† Back to previous question
                 </button>
               )}
             </div>
           ) : (
             <div className="text-center">
-              <div className="text-4xl mb-4">✨</div>
+              <div className="text-4xl mb-4">âœ¨</div>
               <h4 className="text-lg font-medium mb-2">Analysis Complete!</h4>
               <p className="text-gray-300 mb-4">
                 Your skin tone has been determined based on your answers.
               </p>
+              
+              {/* Show answers summary */}
+              <div className="bg-white/10 rounded-lg p-4 mb-4 text-left">
+                <h5 className="font-semibold mb-2">Your Answers:</h5>
+                {questions.map((q, index) => (
+                  <div key={index} className="text-sm mb-2">
+                    <span className="text-gray-300">Q{index + 1}:</span> {q.question}
+                    <br />
+                    <span className="text-gray-300">Answer:</span> {q.options[q.values.indexOf(answers[index])]} 
+                    <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                      answers[index] === "WARM" 
+                        ? "bg-orange-500/20 text-orange-300" 
+                        : answers[index] === "COLD" 
+                        ? "bg-blue-500/20 text-blue-300" 
+                        : "bg-gray-500/20 text-gray-300"
+                    }`}>
+                      {answers[index]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              
               <div className="bg-green-500/20 rounded-lg p-4 mb-4">
                 <p className="text-green-300 font-medium">
-                  Skin Tone: {analysisData.skin_tone}
+                  Final Result: {analysisData.skin_tone}
                 </p>
               </div>
               <button
@@ -1182,25 +1221,15 @@ export default function Onboarding() {
           {!currentAnalysis && !showManualInput && (
             <div className="w-full md:w-[100vw] md:h-[80vh] gap-8">
               {/* Face Analysis */}
-              <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
+              <div className=" backdrop-blur-lg rounded-xl p-6">
                 {/* <p className="text-sm text-gray-300 mb-4">
               {analysisData.face_shape
                 ? `Selected: ${analysisData.face_shape}`
                 : 'Not completed'}
             </p> */}
                 <div className="flex flex-col md:flex-row gap-6 items-start">
-                  {/* Image Section */}
-                  <div className="md:w-3/4 w-full h-[32vh] md:h-[80vh]  relative rounded-lg overflow-hidden">
-                    <Image
-                      src={FacePhoto}
-                      alt="Face Photo"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="md:w-1/4 w-full flex flex-col space-y-4">
+                  {/* Left Section - Webcam/Upload Options */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
                     {/* Analysis Status */}
                     <div className="w-full h-auto bg-[#444141] p-4 rounded-3xl backdrop-blur-lg text-white">
                       <h3 className="text-lg font-bold mb-3">
@@ -1236,7 +1265,7 @@ export default function Onboarding() {
 
                     <div className="w-full h-auto bg-[#444141] p-6 rounded-3xl backdrop-blur-lg text-white">
                       <h1 className="text-xl font-bold mb-4">
-                        📸 Face & Skin Analysis Instructions
+                        ðŸ"¸ Face & Skin Analysis Instructions
                       </h1>
                       <p className="text-sm mb-3">
                         To get the best results, please follow these steps:
@@ -1255,12 +1284,12 @@ export default function Onboarding() {
                         <li>Stay still for a few seconds while we scan.</li>
                       </ul>
                       <p className="text-sm">
-                        ✨ <span className="font-semibold">Tip:</span> Natural
+                        âœ¨ <span className="font-semibold">Tip:</span> Natural
                         daylight works best for accurate skin tone detection.
                       </p>
                     </div>
 
-                    <div className="flex bg-[#444141] p-6 rounded-3xl justify-center items-center flex-col">
+                    <div className="flex bg-[#444141] p-2 rounded-3xl justify-center items-center flex-col">
                       <h1 className="text-xl font-bold mb-4 text-center">
                         Upload picture from your device{" "}
                       </h1>
@@ -1283,41 +1312,31 @@ export default function Onboarding() {
                     >
                       <span className="underline"> Or Insert Manually</span>
                     </button>
-                    <button
-                      onClick={() => setShowFaceInstructions(true)}
-                      className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
-                    >
-                      📋 Instructions
-                    </button>
-                    <button
-                      onClick={() => {
-                        // Skip face analysis, only do skin tone
-                        if (!analysisData.skin_tone) {
-                          setAnalysisData((prev) => ({
-                            ...prev,
-                            skin_tone: "Warm",
-                          })); // Default skin tone
-                        }
-                      }}
-                      className="w-full text-gray-400 py-2 text-sm underline hover:text-white transition-colors"
-                    >
-                      Skip Face Analysis
-                    </button>
-                    <div className="flex justify-center gap-4 mt-8">
+                    <div className="flex  justify-center gap-4 mt-8">
                       <button
                         onClick={() => setCurrentStep(STEPS.BASIC_INFO)}
-                        className="px-8 py-3 rounded-lg border-2 border-white/30 bg-white/10 text-white hover:border-white/50 transition-colors"
+                        className="px-8 w-full py-3 rounded-lg border-2 border-white/30 bg-white/10 text-white hover:border-white/50 transition-colors"
                       >
                         Back
                       </button>
                       <button
                         onClick={handleNext}
                         disabled={!analysisData.skin_tone}
-                        className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-600 hover:to-purple-700 transition-all"
+                        className="px-8 py-3  w-full rounded-lg bg-[#444141] text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-600 hover:to-purple-700 transition-all"
                       >
                         Next
                       </button>
                     </div>
+                  </div>
+
+                  {/* Right Section - Current Photo */}
+                  <div className="md:w-1/2 w-full h-[32vh] md:h-[80vh] relative rounded-lg overflow-hidden">
+                    <Image
+                      src={FacePhoto}
+                      alt="Face Photo"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
               </div>
@@ -1338,12 +1357,12 @@ export default function Onboarding() {
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="bg-[#444141] rounded-xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">📸 Face & Skin Analysis Instructions</h3>
+                  <h3 className="text-xl font-bold text-white">ðŸ"¸ Face & Skin Analysis Instructions</h3>
                   <button
                     onClick={() => setShowFaceInstructions(false)}
                     className="text-white hover:text-gray-300 text-2xl"
                   >
-                    ×
+                    Ã—
                   </button>
                 </div>
                 <div className="text-white text-sm space-y-3">
@@ -1355,7 +1374,7 @@ export default function Onboarding() {
                     <li>Stay still for a few seconds while we scan.</li>
                   </ul>
                   <p className="mt-4">
-                    ✨ <span className="font-semibold">Tip:</span> Natural daylight works best for accurate skin tone detection.
+                    âœ¨ <span className="font-semibold">Tip:</span> Natural daylight works best for accurate skin tone detection.
                   </p>
                 </div>
               </div>
@@ -1363,17 +1382,17 @@ export default function Onboarding() {
           )}
         </div>
       </motion.div>
-       {/**Mobile */}
-       <motion.div
+
+      {/* Mobile */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="min-h-screen md:hidden bg-[#251F1E] flex items-center justify-center  text-white p-4 md:p-8"
+        className="min-h-screen md:hidden bg-[#251F1E] flex items-center justify-center text-white p-4 md:p-8"
       >
         <div className="max-w-4xl mx-auto flex flex-col items-center">
           <div className="w-full">
             <ProgressBar currentStep={STEPS.SKIN_FACE_ANALYSIS} />
-           
           </div>
 
           {/* Show upload analysis if active */}
@@ -1405,25 +1424,9 @@ export default function Onboarding() {
             <div className="w-full md:w-[100vw] md:h-[80vh] gap-8">
               {/* Face Analysis */}
               <div className="backdrop-blur-lg rounded-xl p-6 mt-20">
-                {/* <p className="text-sm text-gray-300 mb-4">
-              {analysisData.face_shape
-                ? `Selected: ${analysisData.face_shape}`
-                : 'Not completed'}
-            </p> */}
-                <div className="flex flex-col md:flex-row gap-6 items-start ">
-                  {/* Image Section */}
-                  <div className="md:w-3/4 w-full flex items-center justify-center md:h-[80vh]   relative overflow-hidden">
-                    <Image
-                      src={MobileFacePhoto}
-                      alt="Face Photo"
-                      height={200}
-                      width={200}
-                      className="object-cover w-[300px] h-[300px] rounded-full"
-                    />
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="md:w-1/4 w-full flex flex-col space-y-4">
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  {/* Left Section - Webcam/Upload Options */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
                     {/* Analysis Status */}
                     <div className="w-full h-auto bg-[#444141] p-4 rounded-3xl backdrop-blur-lg text-white">
                       <h3 className="text-lg font-bold mb-3">
@@ -1457,14 +1460,13 @@ export default function Onboarding() {
                       </div>
                     </div>
 
-
                     <div className="flex bg-[#444141] p-6 rounded-3xl justify-center items-center flex-col">
                       <h1 className="text-xl font-bold mb-4 text-center">
                         Upload picture from your device{" "}
                       </h1>
                       <button
                         onClick={() => startAnalysis("face_shape", "upload")}
-                        className=" border-2 border-white px-16 text-white py-3 rounded-full font-semibold hover:border-white hover:from-green-600 hover:to-emerald-700 transition-all"
+                        className="border-2 border-white px-16 text-white py-3 rounded-full font-semibold hover:border-white hover:from-green-600 hover:to-emerald-700 transition-all"
                       >
                         Upload +
                       </button>
@@ -1477,7 +1479,7 @@ export default function Onboarding() {
                     </button>
                     <button
                       onClick={() => handleManualInput("skin_tone")}
-                      className="w-full  text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
+                      className="w-full text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
                     >
                       <span className="underline"> Or Insert Manually</span>
                     </button>
@@ -1485,7 +1487,7 @@ export default function Onboarding() {
                       onClick={() => setShowFaceInstructions(true)}
                       className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
                     >
-                      📋 Instructions
+                      ðŸ"‹ Instructions
                     </button>
                     <button
                       onClick={() => {
@@ -1517,6 +1519,17 @@ export default function Onboarding() {
                       </button>
                     </div>
                   </div>
+
+                  {/* Right Section - Current Photo */}
+                  <div className="md:w-1/2 w-full flex items-center justify-center md:h-[80vh] relative overflow-hidden">
+                    <Image
+                      src={MobileFacePhoto}
+                      alt="Face Photo"
+                      height={200}
+                      width={200}
+                      className="object-cover w-[300px] h-[300px] rounded-full"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1536,12 +1549,12 @@ export default function Onboarding() {
             <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
               <div className="bg-[#444141] rounded-xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">📸 Face & Skin Analysis Instructions</h3>
+                  <h3 className="text-xl font-bold text-white">ðŸ"¸ Face & Skin Analysis Instructions</h3>
                   <button
                     onClick={() => setShowFaceInstructions(false)}
                     className="text-white hover:text-gray-300 text-2xl"
                   >
-                    ×
+                    Ã—
                   </button>
                 </div>
                 <div className="text-white text-sm space-y-3">
@@ -1553,7 +1566,7 @@ export default function Onboarding() {
                     <li>Stay still for a few seconds while we scan.</li>
                   </ul>
                   <p className="mt-4">
-                    ✨ <span className="font-semibold">Tip:</span> Natural daylight works best for accurate skin tone detection.
+                    âœ¨ <span className="font-semibold">Tip:</span> Natural daylight works best for accurate skin tone detection.
                   </p>
                 </div>
               </div>
@@ -1561,9 +1574,9 @@ export default function Onboarding() {
           )}
         </div>
       </motion.div>
-     </>
-    );
-  };
+    </>
+  );
+};
 
   // Step 4: Body Analysis Component
   const BodyAnalysisStep = ({
@@ -1994,7 +2007,7 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
       {/* Help text */}
       <div className="mt-6 text-center">
         <p className="text-xs text-gray-400">
-          💡 Hover over each option to see more details
+          ðŸ'¡ Hover over each option to see more details
         </p>
       </div>
     </div>
@@ -2137,20 +2150,10 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
             {!currentAnalysis && !showManualInput && (
               <div className="w-full md:w-[100vw] md:h-[80vh] gap-8">
                 {/* Body Analysis */}
-                <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6">
-                  <div className="flex flex-col md:flex-row gap-6 items-start">
-                    {/* Image Section */}
-                    <div className="md:w-3/4 w-full h-[32vh] md:h-[80vh] relative rounded-lg overflow-hidden">
-                      <Image
-                        src={BodyPhoto}
-                        alt="Body Photo"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="md:w-1/4 w-full flex flex-col space-y-4">
+                <div className=" backdrop-blur-lg rounded-xl p-6">
+                                  <div className="flex flex-col md:flex-row gap-6 items-start">
+                  {/* Left Section - Webcam/Upload Options */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
                       {/* Analysis Status */}
                       <div className="w-full h-auto bg-[#444141] p-4 rounded-3xl backdrop-blur-lg text-white">
                         <h3 className="text-lg font-bold mb-3">
@@ -2174,7 +2177,7 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
 
                       <div className="w-full h-auto bg-[#444141] p-6 rounded-3xl backdrop-blur-lg text-white">
                         <h1 className="text-xl font-bold mb-4">
-                          👕 Body Shape Analysis Instructions
+                           Body Shape Analysis Instructions
                         </h1>
                         <p className="text-sm mb-3">
                           Follow these steps for best accuracy:
@@ -2186,7 +2189,7 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                           <li>Ensure full body is visible in frame.</li>
                         </ul>
                         <p className="text-sm">
-                          ✨ <span className="font-semibold">Tip:</span> Stand about 2–3
+                          âœ¨ <span className="font-semibold">Tip:</span> Stand about 2â€"3
                           meters away for better results.
                         </p>
                       </div>
@@ -2207,39 +2210,49 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         onClick={() => startAnalysis("body_shape", "camera")}
                         className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all"
                       >
-                        📷 Capture from Web Camera
+                        ðŸ"· Capture from Web Camera
                       </button>
 
                       <button
                         onClick={() => handleManualInput("body_shape")}
                         className="w-full text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
                       >
-                        <span className="underline">✏️ Manual Selection</span>
+                        <span className="underline"> Manual Selection</span>
                       </button>
                        
-                       <button
+                       {/* <button
                          onClick={() => setShowBodyInstructions(true)}
                          className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
                        >
-                         📋 Instructions
-                       </button>
+                         ðŸ"‹ Instructions
+                       </button> */}
 
                       <div className="flex justify-center gap-4 mt-8">
                         <button
                           onClick={() => setCurrentStep(STEPS.SKIN_FACE_ANALYSIS)}
-                          className="px-8 py-3 rounded-lg border-2 border-white/30 bg-white/10 text-white hover:border-white/50 transition-colors"
+                          className="px-8 py-3 w-full rounded-lg border-2 border-white/30 bg-white/10 text-white hover:border-white/50 transition-colors"
                         >
                           Back
                         </button>
                         <button
                           onClick={handleNext}
                           disabled={!analysisData.body_shape}
-                          className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-600 hover:to-purple-700 transition-all"
+                          className="px-8 py-3 w-full rounded-lg bg-[#444141] text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:from-blue-600 hover:to-purple-700 transition-all"
                         >
                           Next
                         </button>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Right Section - Current Photo */}
+                  <div className="md:w-1/2 w-full h-[32vh] md:h-[80vh] relative rounded-lg overflow-hidden">
+                    <Image
+                      src={BodyPhoto}
+                      alt="Body Photo"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 </div>
               </div>
@@ -2259,12 +2272,12 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
               <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                 <div className="bg-[#444141] rounded-xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-white">👕 Body Shape Analysis Instructions</h3>
+                    <h3 className="text-xl font-bold text-white">ðŸ'• Body Shape Analysis Instructions</h3>
                     <button
                       onClick={() => setShowBodyInstructions(false)}
                       className="text-white hover:text-gray-300 text-2xl"
                     >
-                      ×
+                      Ã—
                     </button>
                   </div>
                   <div className="text-white text-sm space-y-3">
@@ -2276,7 +2289,7 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                       <li>Ensure full body is visible in frame.</li>
                     </ul>
                     <p className="mt-4">
-                      ✨ <span className="font-semibold">Tip:</span> Stand about 2–3 meters away for better results.
+                      âœ¨ <span className="font-semibold">Tip:</span> Stand about 2â€"3 meters away for better results.
                     </p>
                   </div>
                 </div>
@@ -2325,19 +2338,8 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                 {/* Body Analysis */}
                 <div className="backdrop-blur-lg rounded-xl p-6 mt-20">
                   <div className="flex flex-col md:flex-row gap-6 items-start">
-                    {/* Image Section */}
-                    <div className="md:w-3/4 w-full flex items-center justify-center md:h-[80vh] relative overflow-hidden">
-                      <Image
-                        src={MobileBodyPhoto}
-                        alt="Body Photo"
-                        height={200}
-                        width={200}
-                        className="object-cover w-[300px] h-[300px] rounded-full"
-                      />
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="md:w-1/4 w-full flex flex-col space-y-4">
+                    {/* Left Section - Webcam/Upload Options */}
+                    <div className="md:w-1/2 w-full flex flex-col space-y-4">
                       {/* Analysis Status */}
                       <div className="w-full h-auto bg-[#444141] p-4 rounded-3xl backdrop-blur-lg text-white">
                         <h3 className="text-lg font-bold mb-3">
@@ -2375,21 +2377,21 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         onClick={() => startAnalysis("body_shape", "camera")}
                         className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all"
                       >
-                        📷 Capture from Web Camera
+                        ðŸ"· Capture from Web Camera
                       </button>
 
                       <button
                         onClick={() => handleManualInput("body_shape")}
                         className="w-full text-white py-3 rounded-lg hover:bg-gray-700 transition-colors"
                       >
-                        <span className="underline">✏️ Manual Selection</span>
+                        <span className="underline">âœï¸ Manual Selection</span>
                       </button>
                        
                        <button
                          onClick={() => setShowBodyInstructions(true)}
                          className="w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
                        >
-                         📋 Instructions
+                         ðŸ'‹ Instructions
                        </button>
 
                       <div className="flex justify-center gap-4 mt-8">
@@ -2408,6 +2410,17 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         </button>
                       </div>
                     </div>
+                  </div>
+
+                  {/* Right Section - Current Photo */}
+                  <div className="md:w-1/2 w-full flex items-center justify-center md:h-[80vh] relative overflow-hidden">
+                    <Image
+                      src={MobileBodyPhoto}
+                      alt="Body Photo"
+                      height={200}
+                      width={200}
+                      className="object-cover w-[300px] h-[300px] rounded-full"
+                    />
                   </div>
                 </div>
               </div>
@@ -2463,10 +2476,51 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
         
 
             {!hasStarted ? (
-              <div className="w-full bg-white/10 backdrop-blur-lg rounded-xl p-6">
+              <div className="w-full  backdrop-blur-lg rounded-xl p-6">
                 <div className="flex flex-col md:flex-row gap-6 items-start">
-                  {/* Left Section (Image + Badge + Overlay) */}
-                  <div className="md:w-3/4 w-full relative rounded-lg overflow-hidden">
+                  {/* Left Section (Instructions + CTAs) */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
+                    {/* Instructions */}
+                    <div className="w-full bg-[#444141] p-6 rounded-3xl text-white">
+                      <h3 className="text-xl font-bold mb-4">Instructions</h3>
+                      <p className="text-sm text-gray-300 mb-3">
+                        Welcome to the Personality Analysis Test! âœ¨
+                      </p>
+                      <p className="text-sm text-gray-300 mb-3">
+                        This test identifies your personality type (MBTI) to
+                        tailor fashion suggestions.
+                      </p>
+                      <ul className="list-disc list-inside text-sm text-gray-300 space-y-1 mb-6">
+                        <li>16â€"20 questions in total.</li>
+                        <li>Answer honestly â€" no right or wrong answers.</li>
+                        <li>Trust your first instinct.</li>
+                        <li>Think about your usual behavior.</li>
+                        <li>Estimated time: 5â€"7 minutes.</li>
+                      </ul>
+                      <button
+                        onClick={() => setHasStarted(true)}
+                        className="w-full rounded-full bg-white text-gray-900 font-semibold py-3 hover:bg-gray-100 transition"
+                      >
+                        Start the Test
+                      </button>
+                      <button
+                        onClick={() => setCurrentStep(STEPS.COMPLETE)}
+                        className="mt-4 w-full text-gray-300 underline text-sm"
+                      >
+                        I&apos;ll do it later
+                      </button>
+                      
+                      {/* <button
+                        onClick={() => setShowPersonalityInstructions(true)}
+                        className="mt-4 w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
+                      >
+                        ðŸ"‹ Instructions
+                      </button> */}
+                    </div>
+                  </div>
+
+                  {/* Right Section (Photo + Badge + Overlay) */}
+                  <div className="md:w-1/2 w-full relative rounded-lg overflow-hidden">
                     <div className="relative w-full h-[32vh] md:h-[70vh]">
                       <Image
                         src={PersonalityPhoto}
@@ -2487,49 +2541,8 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         <span className="font-semibold">Your Type:</span> ENFP
                       </div>
                       <div className="text-xs md:text-sm text-gray-300">
-                        Outgoing · Energetic · Creative
+                        Outgoing Â· Energetic Â· Creative
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Right Section (Instructions + CTAs) */}
-                  <div className="md:w-1/4 w-full flex flex-col space-y-4">
-                    {/* Instructions */}
-                    <div className="w-full bg-[#444141] p-6 rounded-3xl text-white">
-                      <h3 className="text-xl font-bold mb-4">Instructions</h3>
-                      <p className="text-sm text-gray-300 mb-3">
-                        Welcome to the Personality Analysis Test! ✨
-                      </p>
-                      <p className="text-sm text-gray-300 mb-3">
-                        This test identifies your personality type (MBTI) to
-                        tailor fashion suggestions.
-                      </p>
-                      <ul className="list-disc list-inside text-sm text-gray-300 space-y-1 mb-6">
-                        <li>16–20 questions in total.</li>
-                        <li>Answer honestly — no right or wrong answers.</li>
-                        <li>Trust your first instinct.</li>
-                        <li>Think about your usual behavior.</li>
-                        <li>Estimated time: 5–7 minutes.</li>
-                      </ul>
-                      <button
-                        onClick={() => setHasStarted(true)}
-                        className="w-full rounded-full bg-white text-gray-900 font-semibold py-3 hover:bg-gray-100 transition"
-                      >
-                        Start the Test
-                      </button>
-                      <button
-                        onClick={() => setCurrentStep(STEPS.COMPLETE)}
-                        className="mt-4 w-full text-gray-300 underline text-sm"
-                      >
-                        I'll do it later
-                      </button>
-                      
-                      <button
-                        onClick={() => setShowPersonalityInstructions(true)}
-                        className="mt-4 w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
-                      >
-                        📋 Instructions
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -2560,14 +2573,55 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
 
             {/* Heading */}
             <h2 className="text-3xl font-bold mb-8 text-center">
-              🧠 Personality Analysis
+              ðŸ§  Personality Analysis
             </h2>
 
             {!hasStarted ? (
               <div className="w-full bg-white/10 backdrop-blur-lg rounded-xl p-6 mt-20">
                 <div className="flex flex-col md:flex-row gap-6 items-start">
-                  {/* Left Section (Image + Badge + Overlay) */}
-                  <div className="md:w-3/4 w-full relative rounded-lg overflow-hidden">
+                  {/* Left Section (Instructions + CTAs) */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
+                    {/* Instructions */}
+                    <div className="w-full bg-[#444141] p-6 rounded-3xl text-white">
+                      <h3 className="text-xl font-bold mb-4">Instructions</h3>
+                      <p className="text-sm text-gray-300 mb-3">
+                        Welcome to the Personality Analysis Test! âœ¨
+                      </p>
+                      <p className="text-sm text-gray-300 mb-3">
+                        This test identifies your personality type (MBTI) to
+                        tailor fashion suggestions.
+                      </p>
+                      <ul className="list-disc list-inside text-sm text-gray-300 space-y-1 mb-6">
+                        <li>16â€"20 questions in total.</li>
+                        <li>Answer honestly â€" no right or wrong answers.</li>
+                        <li>Trust your first instinct.</li>
+                        <li>Think about your usual behavior.</li>
+                        <li>Estimated time: 5â€"7 minutes.</li>
+                      </ul>
+                      <button
+                        onClick={() => setHasStarted(true)}
+                        className="w-full rounded-full bg-white text-gray-900 font-semibold py-3 hover:bg-gray-100 transition"
+                      >
+                        Start the Test
+                      </button>
+                      <button
+                        onClick={() => setCurrentStep(STEPS.COMPLETE)}
+                        className="mt-4 w-full text-gray-300 underline text-sm"
+                      >
+                        I&apos;ll do it later
+                      </button>
+                      
+                      <button
+                        onClick={() => setShowPersonalityInstructions(true)}
+                        className="mt-4 w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
+                      >
+                        ðŸ"‹ Instructions
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Right Section (Photo + Badge + Overlay) */}
+                  <div className="md:w-1/2 w-full relative rounded-lg overflow-hidden">
                     <div className="relative w-full flex items-center justify-center">
                       <Image
                         src={MobilePersonalityPhoto}
@@ -2589,29 +2643,62 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         <span className="font-semibold">Your Type:</span> ENFP
                       </div>
                       <div className="text-xs md:text-sm text-gray-300">
-                        Outgoing · Energetic · Creative
+                        Outgoing Â· Energetic Â· Creative
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                <p className="text-center text-gray-300 mb-8">
+                  Discover your style personality with our 16-question assessment
+                </p>
+                <PersonalityAnalysisWidget onComplete={handleNext} />
+              </>
+            )}
+          </div>
+        </motion.div>
 
-                  {/* Right Section (Instructions + CTAs) */}
-                  <div className="md:w-1/4 w-full flex flex-col space-y-4">
+        {/* Mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="min-h-screen md:hidden bg-[#251F1E] flex items-center justify-center text-white p-4 md:p-8"
+        >
+          <div className="max-w-4xl mx-auto flex flex-col items-center w-full">
+            {/* Progress */}
+            <div className="w-full mb-6">
+              <ProgressBar currentStep={STEPS.PERSONALITY_ANALYSIS} />
+            </div>
+
+            {/* Heading */}
+            <h2 className="text-3xl font-bold mb-8 text-center">
+              ðŸ§  Personality Analysis
+            </h2>
+
+            {!hasStarted ? (
+              <div className="w-full bg-white/10 backdrop-blur-lg rounded-xl p-6 mt-20">
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  {/* Left Section (Instructions + CTAs) */}
+                  <div className="md:w-1/2 w-full flex flex-col space-y-4">
                     {/* Instructions */}
                     <div className="w-full bg-[#444141] p-6 rounded-3xl text-white">
                       <h3 className="text-xl font-bold mb-4">Instructions</h3>
                       <p className="text-sm text-gray-300 mb-3">
-                        Welcome to the Personality Analysis Test! ✨
+                        Welcome to the Personality Analysis Test! âœ¨
                       </p>
                       <p className="text-sm text-gray-300 mb-3">
                         This test identifies your personality type (MBTI) to
                         tailor fashion suggestions.
                       </p>
                       <ul className="list-disc list-inside text-sm text-gray-300 space-y-1 mb-6">
-                        <li>16–20 questions in total.</li>
-                        <li>Answer honestly — no right or wrong answers.</li>
+                        <li>16â€"20 questions in total.</li>
+                        <li>Answer honestly â€" no right or wrong answers.</li>
                         <li>Trust your first instinct.</li>
                         <li>Think about your usual behavior.</li>
-                        <li>Estimated time: 5–7 minutes.</li>
+                        <li>Estimated time: 5â€"7 minutes.</li>
                       </ul>
                       <button
                         onClick={() => setHasStarted(true)}
@@ -2623,15 +2710,43 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                         onClick={() => setCurrentStep(STEPS.COMPLETE)}
                         className="mt-4 w-full text-gray-300 underline text-sm"
                       >
-                        I'll do it later
+                        I&apos;ll do it later
                       </button>
                       
                       <button
                         onClick={() => setShowPersonalityInstructions(true)}
                         className="mt-4 w-full bg-[#444141] text-white py-3 rounded-lg font-semibold hover:bg-[#555555] transition-all"
                       >
-                        📋 Instructions
+                        ðŸ"‹ Instructions
                       </button>
+                    </div>
+                  </div>
+
+                  {/* Right Section (Photo + Badge + Overlay) */}
+                  <div className="md:w-1/2 w-full relative rounded-lg overflow-hidden">
+                    <div className="relative w-full flex items-center justify-center">
+                      <Image
+                        src={MobilePersonalityPhoto}
+                        alt="Personality"
+                        height={200}
+                        width={200}
+                        className="object-cover w-[300px] h-[300px] rounded-full"
+                      />
+                    </div>
+
+                    {/* Badge */}
+                    <div className="absolute top-4 left-4 bg-white text-gray-900 text-xs md:text-sm font-semibold rounded-full px-3 py-1 shadow">
+                      PERSONALITY TEST
+                    </div>
+
+                    {/* Overlay Info */}
+                    <div className="absolute bottom-6 left-6 bg-black/50 backdrop-blur px-4 py-3 rounded-lg border border-white/10">
+                      <div className="text-sm md:text-base text-gray-200">
+                        <span className="font-semibold">Your Type:</span> ENFP
+                      </div>
+                      <div className="text-xs md:text-sm text-gray-300">
+                        Outgoing Â· Energetic Â· Creative
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2652,23 +2767,23 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
             <div className="bg-[#444141] rounded-xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-white">🧠 Personality Analysis Instructions</h3>
+                <h3 className="text-xl font-bold text-white">ðŸ§  Personality Analysis Instructions</h3>
                 <button
                   onClick={() => setShowPersonalityInstructions(false)}
                   className="text-white hover:text-gray-300 text-2xl"
                 >
-                  ×
+                  Ã—
                 </button>
               </div>
               <div className="text-white text-sm space-y-3">
-                <p>Welcome to the Personality Analysis Test! ✨</p>
+                <p>Welcome to the Personality Analysis Test! âœ¨</p>
                 <p>This test identifies your personality type (MBTI) to tailor fashion suggestions.</p>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>16–20 questions in total.</li>
-                  <li>Answer honestly — no right or wrong answers.</li>
+                  <li>16â€"20 questions in total.</li>
+                  <li>Answer honestly â€" no right or wrong answers.</li>
                   <li>Trust your first instinct.</li>
                   <li>Think about your usual behavior.</li>
-                  <li>Estimated time: 5–7 minutes.</li>
+                  <li>Estimated time: 5â€"7 minutes.</li>
                 </ul>
               </div>
             </div>
@@ -2697,11 +2812,11 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
         >
           <div className="text-center text-white p-8">
             <ProgressBar currentStep={STEPS.COMPLETE} />
-            <div className="text-6xl flex gap-6 mb-6">
+            <div className="text-6xl text-center flex gap-6 mb-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="44"
+                height="44"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -2721,7 +2836,7 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
                 <path d="m11 2 .33.82c.34.86-.2 1.82-1.11 1.98v0C9.52 4.9 9 5.52 9 6.23V7"></path>
                 <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"></path>
               </svg>
-              <span className="text-2xl">Quiz Completed</span>
+              <span className="text-2xl">All Set to GO..!!</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Welcome to AuraSync!
@@ -2845,3 +2960,4 @@ const BodyShapeManualInput = ({ userData, handleManualSelection }: any) => {
     </AnimatePresence>
   );
 }
+

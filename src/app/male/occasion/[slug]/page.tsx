@@ -47,11 +47,7 @@ const OccasionPage = ({ params }: OccasionPageProps) => {
     <div className="min-h-screen bg-[#1a1414] pb-20">
       {/* Page Title */}
       <section className="pt-8 pb-4 bg-[#1a1414]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center">
-            {occasionName}
-          </h1>
-        </div>
+       
       </section>
 
       {/* Occasion Title Header */}
@@ -59,6 +55,7 @@ const OccasionPage = ({ params }: OccasionPageProps) => {
         <div className="w-full overflow-hidden mb-8">
           <div className="marquee whitespace-nowrap">
             <span className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-wider mx-8">
+              {occasionName} | {occasionName} | {occasionName} | {occasionName} |
               {occasionName} | {occasionName} | {occasionName} | {occasionName}
             </span>
           </div>

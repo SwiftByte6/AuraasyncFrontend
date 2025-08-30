@@ -1,4 +1,4 @@
-// File: C:\Users\Lenovo\Desktop\main\final\frontend\src\app\male\page.tsx
+// File: C:\Users\AuraSync\Downloads\NewFronted\AuraasyncFrontend\src\app\male\page.tsx
 import * as entry from '../../../../src/app/male/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

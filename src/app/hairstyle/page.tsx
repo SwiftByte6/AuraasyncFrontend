@@ -15,12 +15,12 @@ export default function HairstylePage() {
     setUserData(data);
     setLoading(false);
 
-    // Check if user has completed face analysis
-    if (!data?.face_shape) {
-      alert('Please complete face analysis first to access hairstyle recommendations');
-      router.push('/onboarding');
-      return;
-    }
+    // TEMPORARILY DISABLED FOR TESTING - Check if user has completed face analysis
+    // if (!data?.face_shape) {
+    //   alert('Please complete face analysis first to access hairstyle recommendations');
+    //   router.push('/onboarding');
+    //   return;
+    // }
   }, [router]);
 
   if (loading) {
@@ -31,22 +31,23 @@ export default function HairstylePage() {
     );
   }
 
-  if (!userData?.face_shape) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-center text-white">
-          <h1 className="text-2xl font-bold mb-4">Face Analysis Required</h1>
-          <p className="mb-6">Please complete face analysis to access hairstyle recommendations</p>
-          <button 
-            onClick={() => router.push('/onboarding')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
-          >
-            Go to Onboarding
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // TEMPORARILY DISABLED FOR TESTING
+  // if (!userData?.face_shape) {
+  //   return (
+  //     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+  //     <div className="text-center text-white">
+  //       <h1 className="text-2xl font-bold mb-4">Face Analysis Required</h1>
+  //       <p className="mb-6">Please complete face analysis to access hairstyle recommendations</p>
+  //       <button 
+  //         onClick={() => router.push('/onboarding')}
+  //         className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+  //       >
+  //         Go to Onboarding
+  //       </button>
+  //     </div>
+  //   </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 pb-20">

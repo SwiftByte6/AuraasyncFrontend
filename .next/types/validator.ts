@@ -85,6 +85,12 @@ type ApiRouteConfig = {
   handler satisfies AppPageConfig<"/female/occasion/[slug]">
 }
 
+// Validate ../../src/app/female/outfit-recommendation/[slug]/page.tsx
+{
+  const handler = {} as typeof import("../../src/app/female/outfit-recommendation/[slug]/page.js")
+  handler satisfies AppPageConfig<"/female/outfit-recommendation/[slug]">
+}
+
 // Validate ../../src/app/female/page.tsx
 {
   const handler = {} as typeof import("../../src/app/female/page.js")
@@ -107,6 +113,12 @@ type ApiRouteConfig = {
 {
   const handler = {} as typeof import("../../src/app/male/occasion/[slug]/page.js")
   handler satisfies AppPageConfig<"/male/occasion/[slug]">
+}
+
+// Validate ../../src/app/male/outfit-recommendations/[slug]/page.tsx
+{
+  const handler = {} as typeof import("../../src/app/male/outfit-recommendations/[slug]/page.js")
+  handler satisfies AppPageConfig<"/male/outfit-recommendations/[slug]">
 }
 
 // Validate ../../src/app/male/page.tsx
@@ -173,6 +185,12 @@ type ApiRouteConfig = {
   handler satisfies LayoutConfig<"/female/occasion">
 }
 
+// Validate ../../src/app/female/outfit-recommendation/layout.tsx
+{
+  const handler = {} as typeof import("../../src/app/female/outfit-recommendation/layout.js")
+  handler satisfies LayoutConfig<"/female/outfit-recommendation">
+}
+
 // Validate ../../src/app/layout.tsx
 {
   const handler = {} as typeof import("../../src/app/layout.js")
@@ -183,4 +201,10 @@ type ApiRouteConfig = {
 {
   const handler = {} as typeof import("../../src/app/male/occasion/layout.js")
   handler satisfies LayoutConfig<"/male/occasion">
+}
+
+// Validate ../../src/app/male/outfit-recommendations/layout.tsx
+{
+  const handler = {} as typeof import("../../src/app/male/outfit-recommendations/layout.js")
+  handler satisfies LayoutConfig<"/male/outfit-recommendations">
 }

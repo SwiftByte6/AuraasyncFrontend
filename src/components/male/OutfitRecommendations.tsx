@@ -7,8 +7,11 @@ import r3 from '@/app/assets/male/r3.png'
 import r4 from '@/app/assets/male/r4.png'
 import r5 from '@/app/assets/male/r1.png'
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 const OutfitRecommendations = () => {
+  const router = useRouter();
+  
   const recommendations = [
     {
       id: 1,
@@ -16,6 +19,7 @@ const OutfitRecommendations = () => {
       label: "Men's Shirts",
       caption: "Discover our latest Men Shirts collection",
       featured: false,
+      slug: 'mens-shirts'
     },
     {
       id: 2,
@@ -23,27 +27,31 @@ const OutfitRecommendations = () => {
       label: "Men's Ethnic wear",
       caption: "Discover our latest Men's ethnic wear collection",
       featured: true,
+      slug: 'mens-ethnic-wear'
     },
     {
       id: 3,
-      image: r2,
+      image: r3,
       label: "Men's Bottomwears",
-      caption: "Discover our latest women jacket collection",
+      caption: "Discover our latest men's bottomwear collection",
       featured: false,
+      slug: 'mens-bottomwear'
     },
     {
       id: 4,
-      image: r3,
+      image: r2,
       label: "Men's T-shirts",
       caption: "Discover our latest Men's T-shirt collection",
       featured: false,
+      slug: 'mens-tshirts'
     },
     {
       id: 5,
       image: r4,
       label: "Men's Jackets",
-      caption: "Discover our latest women jacket collection",
+      caption: "Discover our latest men's jacket collection",
       featured: false,
+      slug: 'mens-jackets'
     },
   ];
 
@@ -64,6 +72,8 @@ const OutfitRecommendations = () => {
         </div>
       </div>
 
+
+
       {/* Content Section - Responsive Grid Layout */}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mx-auto">
@@ -72,37 +82,38 @@ const OutfitRecommendations = () => {
           <div className="md:grid hidden  grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {/* Column 1: Two stacked cards */}
             <div className="flex flex-col gap-4  md:gap-6">
-              <RecommendationCard {...recommendations[0]} />
-              <RecommendationCard {...recommendations[3]} />
+              <RecommendationCard {...recommendations[0]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[0].slug}`)} />
+                            <RecommendationCard {...recommendations[2]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[2].slug}`)} />
             </div>
 
             {/* Column 2: Tall featured card */}
             <div className="flex h-full md:w-full col-span-1 md:col-span-1">
-              <RecommendationCard {...recommendations[1]} />
+              <RecommendationCard {...recommendations[1]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[1].slug}`)} />
             </div>
 
             {/* Column 3: Two stacked cards */}
             <div className="flex flex-col gap-4 md:gap-6">
-              <RecommendationCard {...recommendations[2]} />
-              <RecommendationCard {...recommendations[4]} />
+              <RecommendationCard {...recommendations[3]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[3].slug}`)} />
+
+              <RecommendationCard {...recommendations[4]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[4].slug}`)} />
             </div>
           </div>
           {/* Mobile Layout with 2 Columns and 6 Rows */}
           <div className="grid md:hidden grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {/* Column 1: Two stacked cards */}
             <div className="flex h-full md:w-full col-span-1 md:col-span-1">
-              <RecommendationCard {...recommendations[1]} />
+              <RecommendationCard {...recommendations[1]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[1].slug}`)} />
             </div>
 
             <div className="flex flex-col h-[600px] gap-4 md:gap-6">
-              <RecommendationCard {...recommendations[0]} />
-              <RecommendationCard {...recommendations[3]} />
+              <RecommendationCard {...recommendations[0]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[0].slug}`)} />
+              <RecommendationCard {...recommendations[3]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[3].slug}`)} />
             </div>
 
             {/* Column 3 (mobile: full width stacked) */}
             <div className="col-span-2  grid grid-cols-2 gap-4 md:gap-6">
-              <RecommendationCard {...recommendations[2]} />
-              <RecommendationCard {...recommendations[4]} />
+              <RecommendationCard {...recommendations[2]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[2].slug}`)} />
+              <RecommendationCard {...recommendations[4]} onClick={() => router.push(`/male/outfit-recommendations/${recommendations[4].slug}`)} />
             </div>
           </div>
         </div>
@@ -114,9 +125,10 @@ const OutfitRecommendations = () => {
   );
 };
 
-const RecommendationCard = ({ image, label, caption, featured }) => {
+const RecommendationCard = ({ image, label, caption, featured, onClick }) => {
   return (
     <div
+      onClick={onClick}
       className={`relative group overflow-hidden border border-white/10 bg-black/10 shadow-lg cursor-pointer ${
         featured ? "md:h-[624px]  h-[600px] w-full" : "h-[300px] w-full"
       }`}

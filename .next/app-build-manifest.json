@@ -6,6 +6,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
     "/onboarding/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -17,76 +22,20 @@
       "static/css/app/male/page.css",
       "static/chunks/app/male/page.js"
     ],
-    "/page": [
+    "/male/outfit-recommendations/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/male/outfit-recommendations/layout.js"
     ],
-    "/female/page": [
+    "/male/outfit-recommendations/[slug]/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/female/page.css",
-      "static/chunks/app/female/page.js"
+      "static/chunks/app/male/outfit-recommendations/[slug]/not-found.js"
     ],
-    "/female/recommendations/page": [
+    "/male/outfit-recommendations/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/female/recommendations/page.js"
-    ],
-    "/male/occasion/[slug]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/male/occasion/[slug]/page.js"
-    ],
-    "/male/occasion/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/male/occasion/not-found.js"
-    ],
-    "/male/occasion/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/male/occasion/layout.js"
-    ],
-    "/dashboard/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/page.js"
-    ],
-    "/search/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/search/page.js"
-    ],
-    "/hairstyle/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/hairstyle/page.js"
-    ],
-    "/male/recommendations/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/male/recommendations/page.js"
-    ],
-    "/profile/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/profile/page.js"
-    ],
-    "/female/occasion/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/female/occasion/layout.js"
-    ],
-    "/female/occasion/not-found": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/female/occasion/not-found.js"
-    ],
-    "/female/occasion/[slug]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/female/occasion/[slug]/page.js"
+      "static/chunks/app/male/outfit-recommendations/[slug]/page.js"
     ]
   }
 }

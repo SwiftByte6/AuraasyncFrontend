@@ -45,6 +45,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  manifest: '/manifest.json',
   openGraph: {
     title: "AuraSync - AI-Powered Fashion Analysis & Style Recommendations",
     description: "Discover your unique fashion personality with AI-powered analysis. Get personalized style recommendations based on your body type, face shape, and personality.",

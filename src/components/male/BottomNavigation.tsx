@@ -16,8 +16,8 @@ export default function BottomNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-neutral-800 text-white border-t border-gray-600">
-      <div className="flex items-center justify-around px-4 py-3">
+    <nav className="fixed bottom-10 rounded-[35px] left-1/2 transform -translate-x-1/2  w-[70vw] md:w-[30vw] z-50 bg-neutral-800 text-white border-t border-gray-600">
+      <div className="flex items-center justify-around px-4 py-5">
         {/* Home */}
         <Link 
           href="/male" 
@@ -25,8 +25,8 @@ export default function BottomNav() {
             isActive('/male') ? 'text-blue-400' : 'text-white hover:text-blue-400'
           }`}
         >
-          <Home className="h-6 w-6" />
-          <span className="text-xs">Home</span>
+          <Home className="h-8 w-8" />
+          {/* <span className="text-xs">Home</span> */}
         </Link>
 
         {/* Dashboard */}
@@ -36,8 +36,8 @@ export default function BottomNav() {
             isActive('/dashboard') ? 'text-blue-400' : 'text-white hover:text-blue-400'
           }`}
         >
-          <UserCircle className="h-6 w-6" />
-          <span className="text-xs">Dashboard</span>
+          <UserCircle className="h-8 w-8" />
+          {/* <span className="text-xs">Dashboard</span> */}
         </Link>
 
         {/* Search */}
@@ -47,8 +47,8 @@ export default function BottomNav() {
             isActive('/search') ? 'text-blue-400' : 'text-white hover:text-blue-400'
           }`}
         >
-          <Search className="h-6 w-6" />
-          <span className="text-xs">Search</span>
+          <Search className="h-8 w-8" />
+          {/* <span className="text-xs">Search</span> */}
         </Link>
 
         {/* Hairstyle */}
@@ -59,11 +59,11 @@ export default function BottomNav() {
           }`}
         >
           <Image src={HairIcon} width={24} height={24} alt="hair icon" className="h-6 w-6"/>
-          <span className="text-xs">Hairstyle</span>
+          {/* <span className="text-xs">Hairstyle</span> */}
         </Link>
 
         {/* Profile */}
-        <Link 
+        {/* <Link 
           href="/profile" 
           className={`flex flex-col items-center space-y-1 transition-colors ${
             isActive('/profile') ? 'text-blue-400' : 'text-white hover:text-blue-400'
@@ -71,7 +71,7 @@ export default function BottomNav() {
         >
           <User className="h-6 w-6" />
           <span className="text-xs">Profile</span>
-        </Link>
+        </Link> */}
       </div>
     </nav>
   );

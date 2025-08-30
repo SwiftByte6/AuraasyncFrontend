@@ -19,10 +19,10 @@ export default function FlowController({ children }: FlowControllerProps) {
       const userData = getUserData();
       const currentPath = window.location.pathname;
 
-      // Landing page (guest UI): if authenticated and done, skip to recommendations
+      // Landing page (guest UI): if authenticated and done, skip to gender homepage
       if (currentPath === '/') {
         if (userData && userData.onboarding_completed) {
-          const redirectPath = userData.gender === 'male' ? '/male/recommendations' : '/female/recommendations';
+          const redirectPath = userData.gender === 'male' ? '/male' : '/female';
           setIsLoading(false);
           router.replace(redirectPath);
           return;
@@ -38,7 +38,7 @@ export default function FlowController({ children }: FlowControllerProps) {
       if (currentPath === '/onboarding') {
         // Allow onboarding even with no user data. Only redirect if it's already completed.
         if (userData && userData.onboarding_completed) {
-          const redirectPath = userData.gender === 'male' ? '/male/recommendations' : '/female/recommendations';
+          const redirectPath = userData.gender === 'male' ? '/male' : '/female';
           setIsLoading(false);
           router.replace(redirectPath);
           return;
@@ -61,7 +61,7 @@ export default function FlowController({ children }: FlowControllerProps) {
           return;
         } else if (userData.gender && !currentPath.startsWith(`/${userData.gender}`)) {
           // Wrong gender page, redirect to correct one
-          const correctPath = userData.gender === 'male' ? '/male/recommendations' : '/female/recommendations';
+          const correctPath = userData.gender === 'male' ? '/male' : '/female';
           setIsLoading(false);
           router.replace(correctPath);
           return;
